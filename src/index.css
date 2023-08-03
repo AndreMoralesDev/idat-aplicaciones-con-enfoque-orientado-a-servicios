@@ -1,0 +1,10 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        
+    }
+}
