@@ -1,0 +1,44 @@
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--step-4);
+    width: min(100%, 50rem);
+    padding: var(--step-5) var(--step-3);
+    color: #fff;
+    border-radius: var(--step-1);
+    box-shadow: 
+        0 0 var(--step-5) rgba($color: #000, $alpha: 0.2),
+        var(--step-1) var(--step-1) var(--step-3) rgba($color: #000, $alpha: 0.1);
+    & h1 {
+        margin-bottom: var(--step--2);
+    }
+    & .submit {
+        border-radius: var(--step--2);
+        padding: var(--step--1);
+        background-color: var(--primary-color);
+        border: 0.2rem solid var(--primary-color);;
+        color: var(--background);
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: box-shadow 0.3s ease-out;
+        &:hover {
+            box-shadow: 
+                0 0 var(--step-1) var(--primary-color),
+                0 0 var(--step-3) var(--primary-color);
+        }
+    }
+    & .extra-options-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        & > * {
+            text-decoration: none;
+            font-weight: 600;
+        }
+        & .signup {
+            text-decoration: underline;
+            text-decoration-color: var(--primary-color);
+            text-decoration-thickness: 0.3rem;
+        }
+    }
+}

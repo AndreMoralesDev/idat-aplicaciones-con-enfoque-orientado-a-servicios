@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Header } from './components/container/Header/Header'
+import { HomePage } from './pages/HomePage/HomePage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
+import { SignupPage } from './pages/SignupPage/SignupPage';
 import './App.css'
+import { useAuthStore } from './store/useAuthStore';
+import { NotFoundPage } from './pages/NotFoundPage/NotFoundPage';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const user = useAuthStore(state => state.user);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (<>
+        <Header />
+        <p>User: { JSON.stringify(user) }</p>
+        <main>
+            <Routes>
+                <Route path="/" element={
+                    user ? <HomePage /> : <Navigate to="/login" />
+                } />
+                <Route path="/signup" element={ 
+                    !user ? <SignupPage /> : <Navigate to="/" />
+                } />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+        </main>
+    </>)
 }
 
-export default App
+export default App;

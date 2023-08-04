@@ -21,3 +21,13 @@ pnpm run dev
 ```
 
 Una vez que el programa esté ejecutando, puedes ver el resultado en `http://localhost:5173/`
+
+**4.** Definir las variables de entorno
+```text
+VITE_URL_WORKERS=URL...
+VITE_URL_PIECES=URL...
+VITE_URL_CITIES=URL...
+VITE_URL_LOGIN=URL...
+```
+
+**No olvides tener ejecutando el proyecto backend.**
