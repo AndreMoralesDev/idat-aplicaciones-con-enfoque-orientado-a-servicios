@@ -2,21 +2,36 @@ import * as Yup from "yup"
 import { Formik, Form } from "formik"
 import { useAuth } from "../../../hooks/useAuth"
 import { Link } from "react-router-dom"
-import { InputForm } from "../../pure/InputForm/InputForm"
+import { InputFormik } from "../../pure/InputFormik/InputFormik"
 import styles from "./signup.module.scss"
+import { useCities } from "../../../hooks/useCities"
+import { useEffect, useState } from "react"
+import { SelectFormik } from "../../pure/SelectFormik/SelectFormik"
 
 const initialValues = {
     username: "",
-    password: ""
+    password: "",
+    city: ""
 }
 
-export const LoginForm = () => {
-    const { onLogin } = useAuth();
-
-    const handleSubmit = (values , { resetForm }) => {
-        onLogin(values);
-        resetForm();
+const initialCities = [
+    { 
+        value: "", 
+        name: "Seleccionar"
     }
+];
+
+export const LoginForm = () => {
+    const { isLoading, onLogin } = useAuth();
+    const { isLoading: isLoadingCities, getCitiesForSelectFormik } = useCities();
+    const [cities, setCities] = useState(initialCities);
+
+    useEffect(() => {
+        getCitiesForSelectFormik()
+            .then(res => {
+                setCities([ ...initialCities, ...res]);
+            });
+    }, [])
 
     return (
         <Formik
@@ -29,28 +44,35 @@ export const LoginForm = () => {
                     .min(8, "Contraseña demasiado corta")
                     .max(50, "Contraseña demasiada larga")
                     .required("Este campo es requerido"),
+                city: Yup.number()
+                    .required("Este campo es requerido")
             })}
-            onSubmit={ handleSubmit }
+            onSubmit={ onLogin }
         >
             <Form className={ styles["login-form-container"] } autoComplete="off">
                 <h1>Iniciar sesión</h1>
-                <InputForm
+                <InputFormik
                     label="Nombre"
                     name="username"
                 />
-                <InputForm
+                <InputFormik
                     label="Contraseña"
                     type="password"
                     name="password"
                 />
+                <SelectFormik
+                    label="Ciudad"
+                    name="city"
+                    options={ cities }
+                />
                 <input 
                     type="submit" 
-                    value="Registrarse"
+                    value="Ingresar"
                     className={ styles["submit"] }
                 />
                 <div className={ styles["extra-options-container"] }>
                     <Link>Olvidé mi contraseña</Link>
-                    <Link to="/login" className={ styles["signup"] }>
+                    <Link to="/signup" className={ styles["signup"] }>
                         Registrarse
                     </Link>
                 </div>

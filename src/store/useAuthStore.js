@@ -5,7 +5,7 @@ const initialUser = null;
 
 export const useAuthStore = create(persist((set) => ({
     user: initialUser,
-    setUser: ({ id, username }) => set({ user: { id, username } }),
+    setUser: ({ password, ...userData }) => set({ user: userData }),
     unsetUser: () => set({ user: initialUser })
 }), {
     name: "user"

@@ -3,20 +3,40 @@ import { Formik, Form } from "formik"
 import { useAuth } from "../../../hooks/useAuth";
 import styles from "./signup.module.scss"
 import { Link } from "react-router-dom";
-import { InputForm } from "../../pure/InputForm/InputForm";
+import { InputFormik } from "../../pure/InputFormik/InputFormik";
+import { SelectFormik } from "../../pure/SelectFormik/SelectFormik";
+import { useEffect, useState } from "react";
+import { useCities } from "../../../hooks/useCities";
 
 const initialValues = {
     username: "",
-    password: ""
+    password: "",
+    city: ""
 }
 
+const initialCities = [
+    { 
+        value: "", 
+        name: "Seleccionar"
+    }
+];
+
 export const SignupForm = () => {
-    const { onSignup } = useAuth();
+    const { isLoading, onSignup } = useAuth();
+    const { isLoading: isLoadingCities, getCitiesForSelectFormik } = useCities();
+    const [cities, setCities] = useState(initialCities);
 
     const handleSubmit = (values , { resetForm }) => {
         onSignup(values);
         resetForm();
     }
+
+    useEffect(() => {
+        getCitiesForSelectFormik()
+            .then(res => {
+                setCities([ ...initialCities, ...res]);
+            });
+    }, [])
 
     return (
         <Formik
@@ -29,19 +49,26 @@ export const SignupForm = () => {
                     .min(8, "Contraseña demasiado corta")
                     .max(50, "Contraseña demasiada larga")
                     .required("Este campo es requerido"),
+                city: Yup.number()
+                    .required("Este campo es requerido")
             })}
             onSubmit={ handleSubmit }
         >
             <Form className={ styles["signup-form-container"] } autoComplete="off">
                 <h1>Registrarse</h1>
-                <InputForm
+                <InputFormik
                     label="Nombre"
                     name="username"
                 />
-                <InputForm
+                <InputFormik
                     label="Contraseña"
                     type="password"
                     name="password"
+                />
+                <SelectFormik
+                    label="Ciudad"
+                    name="city"
+                    options={ cities }
                 />
                 <input 
                     type="submit" 

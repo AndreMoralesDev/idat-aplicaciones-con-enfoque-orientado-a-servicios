@@ -1,15 +1,24 @@
 import { ErrorMessage, Field } from 'formik'
-import styles from "./input-form.module.scss"
 import PropTypes from "prop-types"
+import styles from "./input-formik.module.scss"
 
 /**
- * @param {string} props.label - Nombre visible del input
- * @param {string} props.type - Tipo del input
- * @param {string} props.name - Nombre del input
- * @returns {JSX.Element} - Input estilizado
+ * @component
+ *
+ * @param {Object} props - Las propiedades del componente.
+ * @param {string} props.label - Etiqueta del campo de entrada.
+ * @param {string} [props.type] - Tipo del campo de entrada (por defecto: 'text').
+ * @param {string} props.name - Nombre único del campo de entrada.
+ *
+ * @example
+ * <InputFormik
+ *    label="Nombre"
+ *    type="text"
+ *    name="nombre"
+ * />
  */
 
-export const InputForm = ({ label, type="text", name }) => {
+export const InputFormik = ({ label, type="text", name }) => {
     return (
         <div className={ styles["input-container"]}>
             <label className={ styles["label"]}>
@@ -27,7 +36,7 @@ export const InputForm = ({ label, type="text", name }) => {
     )
 }
 
-InputForm.propTypes = {
+InputFormik.propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
     name: PropTypes.string.isRequired

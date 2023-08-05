@@ -3,7 +3,8 @@ import { useState } from "react";
 const defaultOptions = {
     headers: {
         "Content-Type": "application/json"
-    }
+    },
+    mode: "cors"
 }
 
 export const useFetch = () => {
@@ -14,17 +15,17 @@ export const useFetch = () => {
         return setResponse({ url, config });
     }
 
-    const post = async ({ url, options }) => {
+    const post = async ({ url, options={} }) => {
         const config = { ...defaultOptions, ...options, method: "POST" }
         return setResponse({ url, config });
     }
 
-    const put = async ({ url, options }) => {
+    const put = async ({ url, options={} }) => {
         const config = { ...defaultOptions, ...options, method: "PUT" }
         return setResponse({ url, config });
     }
 
-    const del = async ({ url, options }) => {
+    const del = async ({ url, options ={}}) => {
         const config = { ...defaultOptions, ...options, method: "DELETE" }
         return setResponse({ url, config });
     }
@@ -32,6 +33,7 @@ export const useFetch = () => {
     const setResponse = async ({ url, config }) => {
         try {
             setIsLoading(true);
+            config.body = config.body ? JSON.stringify(config.body) : null;
             const res = await fetch(url, config);
 
             if (!res.ok) throw { 
@@ -48,9 +50,14 @@ export const useFetch = () => {
                 data: json.data
             }
         } catch (error) {
-            console.log(error)
+            console.log({
+                status: error.status || 500,
+                statusMessage:  error.statusMessage || "Internal Server Error",
+                error: true,
+                data: null
+            })
             return {
-                status: error.status,
+                status: error.status || 500,
                 statusMessage:  error.statusMessage || "Internal Server Error",
                 error: true,
                 data: null

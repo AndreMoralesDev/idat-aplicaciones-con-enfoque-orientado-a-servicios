@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { URL_WORKERS } from "../utils/endpoints";
+import { URL_WORKERS, URL_LOGIN } from "../utils/endpoints";
 import { useFetch } from "./useFetch"
 
 export const useAuth = () => {
-    const { isLoading, post } = useFetch();
+    const { isLoading, post, get } = useFetch();
     const navigate = useNavigate();
     const [
         setUser, 
@@ -14,37 +14,37 @@ export const useAuth = () => {
         state.unsetUser
     ]);
 
-    const onSignup = async ({ username, password }) => {
-        const body = { user: username, password };
-        // const { error, data } = await post({ url: URL_WORKERS, options: { body } })
-        const error = false;
-        const data = { id: 1, user: "Matias" }
-        if (error) {
-            // Mostrar alerta de error
-        } else {
-            // Mostrar alerta de éxito
-            const user = {
-                id: data.id,
-                username: data.user
+    const onSignup = async ({ username, password, city }) => {
+        const body = { 
+            user: username, 
+            password,
+            ciudad: {
+                id: parseInt(city)
             }
-            setUser(user);
-            navigate("/");
-        }
-        console.log({ body })
-    }
-
-    const onLogin = async ({ username, password }) => {
-        const body = { username, password };
+        };
         const { error, data } = await post({ url: URL_WORKERS, options: { body } })
         if (error) {
             // Mostrar alerta de error
         } else {
             // Mostrar alerta de éxito
-            const user = {
-                id: data.id,
-                username: data.user
-            }
-            setUser(user);
+            setUser(data);
+            navigate("/");
+        }
+    }
+
+    const onLogin = async ({ username, password, city }) => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("user", username);
+        queryParams.append("password", password);
+        queryParams.append("ciudadId", city);
+        const url = `${URL_LOGIN}?${queryParams.toString()}`;
+
+        const { error, data } = await get({ url })
+        if (error) {
+            // Mostrar alerta de error
+        } else {
+            // Mostrar alerta de éxito
+            setUser(data);
             navigate("/");
         }
     }

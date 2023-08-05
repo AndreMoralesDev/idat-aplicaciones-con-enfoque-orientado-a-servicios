@@ -12,8 +12,8 @@ export const Header = () => {
                 </h2>
                 <nav className={ styles["main-navigation"] }>
                     { !user && (<>
-                        <NavLink to="/signup">Signup</NavLink>
-                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/signup">Registrase</NavLink>
+                        <NavLink to="/login">Ingresar</NavLink>
                     </>)}
                 </nav>
             </div>
