@@ -22,7 +22,7 @@ pnpm run dev
 
 Una vez que el programa esté ejecutando, puedes ver el resultado en `http://localhost:5173/`
 
-**4.** Crea un archivo `.env.local` y define las variables de entorno, puede guiarte del archivo `.env.example`,
+**4.** Crea un archivo `.env.local` al nivel del `src/` y define las variables de entorno, puede guiarte del archivo `.env.example`,
 ```text
 VITE_URL_WORKERS=URL...
 VITE_URL_PIECES=URL...
