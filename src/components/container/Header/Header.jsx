@@ -11,10 +11,15 @@ export const Header = () => {
                     <NavLink to="/">Company</NavLink>
                 </h2>
                 <nav className={ styles["main-navigation"] }>
-                    { !user && (<>
-                        <NavLink to="/signup">Registrase</NavLink>
-                        <NavLink to="/login">Ingresar</NavLink>
-                    </>)}
+                    { user 
+                        ? (<>
+                            <NavLink to="/pieces/add">Piezas</NavLink>
+                        </>)
+                        : (<>
+                            <NavLink to="/signup">Registrase</NavLink>
+                            <NavLink to="/login">Ingresar</NavLink>
+                        </>)
+                    }
                 </nav>
             </div>
         </header>
