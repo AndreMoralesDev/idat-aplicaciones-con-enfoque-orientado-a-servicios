@@ -1,0 +1,22 @@
+.list-of-pieces-container {
+    border: 0rem solid #000;
+    border: none;
+    border-collapse: collapse;
+    & td, th {
+        font-size: var(--step-1);
+        text-align: center;
+        padding: var(--step--2);
+        // border: 0.2rem solid var(--background);
+        border: 0.2rem solid #000;
+    }
+    & th {
+        background-color: var(--primary-color);
+        color: var(--background);
+    }
+    & tr {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    & tr:nth-child(odd) {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}

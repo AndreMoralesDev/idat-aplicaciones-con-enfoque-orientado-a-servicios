@@ -1,0 +1,17 @@
+.pieces-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--step-4);
+    width: min(100%, 50rem);
+    padding: var(--step-5) var(--step-3);
+    border-radius: var(--step-1);
+    box-shadow: 
+        0 0 var(--step-5) rgba($color: #000, $alpha: 0.2),
+        var(--step-1) var(--step-1) var(--step-3) rgba($color: #000, $alpha: 0.1);
+    & .titles-container {
+        margin-bottom: var(--step-1);
+    }
+    & .subtitle b {
+        color: var(--primary-color);
+    }
+}
