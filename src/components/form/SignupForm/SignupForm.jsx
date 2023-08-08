@@ -50,6 +50,7 @@ export const SignupForm = () => {
                     .max(50, "Contraseña demasiada larga")
                     .required("Este campo es requerido"),
                 city: Yup.number()
+                    .typeError("Ciudad inválida")
                     .required("Este campo es requerido")
             })}
             onSubmit={ handleSubmit }
