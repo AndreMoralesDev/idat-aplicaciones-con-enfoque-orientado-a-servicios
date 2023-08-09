@@ -20,7 +20,7 @@ const initialValues = {
 export const PiecesFilterForm = ({ onSubmit }) => {
     return (
         <div className={ styles["pieces-filter-form-container"] }>
-            <h3>Filtros</h3>
+            <h3>Buscar piezas</h3>
             <Formik
                 initialValues={ initialValues }
                 validationSchema={ Yup.object({
@@ -49,6 +49,7 @@ export const PiecesFilterForm = ({ onSubmit }) => {
                     />
                     <CitiesSelectFormik
                         name="cityId"
+                        all={ true }
                     />
                     <Button 
                         type="submit" 

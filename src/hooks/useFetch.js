@@ -47,7 +47,7 @@ export const useFetch = () => {
                 status: json.status || res.status,
                 statusMessage:  res.statusMessage || "ok",
                 error: false,
-                data: json.data
+                data: json
             }
         } catch (error) {
             console.log({

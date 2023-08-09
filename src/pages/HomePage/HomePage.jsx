@@ -20,7 +20,6 @@ export const HomePage = () => {
     return (
         <section className={ styles["home-page-container"] }>
             <PiecesFilterForm onSubmit={ filterPieces } />
-            <h3>Resultados</h3>
             <ListOfPieces pieces={ pieces }/>
             <Button 
                 onClick={ ()=> unsetUser() }

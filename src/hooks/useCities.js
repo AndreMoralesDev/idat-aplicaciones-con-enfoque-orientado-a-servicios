@@ -5,27 +5,24 @@ export const useCities = () => {
     const { isLoading, get } = useFetch();
 
     const getAllCities = async () => {
-        const res = await get({ url: URL_CITIES });
-        if (res.error) {
+        const { error, data } = await get({ url: URL_CITIES });
+        if (error) {
             // Mensaje de error
             return []
         }
-        return res.data;
+        return data.data;
     }
 
     const getCitiesForSelectFormik = async () => {
-        const res = await get({ url: URL_CITIES });
-        if (res.error) {
+        const { error, data } = await get({ url: URL_CITIES });
+        if (error) {
             // Mensaje de error
             return []
         }
-
-        const cityFormat = (city) =>
-            city[0].toUpperCase() + city.toLowerCase().slice(1);
-
-        const selectFormat = res.data.map(({ id, nombre }) => ({
+        
+        const selectFormat = data.data.map(({ id, nombre }) => ({
             value: id,
-            name: cityFormat(nombre)
+            name: nombre
         }));
 
         return selectFormat;

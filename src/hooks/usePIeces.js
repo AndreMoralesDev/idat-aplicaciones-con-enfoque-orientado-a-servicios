@@ -7,33 +7,46 @@ export const usePieces = () => {
     const user = useAuthStore(state => state.user);
 
     const getAllPieces = async () => {
-        const res = await get(URL_PIECES);
+        const { error, data } = await get(URL_PIECES);
 
-        if (res.error) {
+        if (error) {
             // Mensaje de error, no se pudieron agregar las piezas
             return []
         }
 
-        return res.data;
+        return data.data;
     }
 
     const getPiecesWithFilters = async ({ startDate, endDate, cityId }) => {
         const queryParams = new URLSearchParams();
         queryParams.append("startDate", startDate);
         queryParams.append("endDate", endDate);
-        queryParams.append("ciudadId", cityId);
-        const url = `${URL_PIECES}/filtrar?${queryParams.toString()}`;
 
-        // Falta refactorizar
-        const res = await fetch(url);
-        // const res = await get({ url });
-        if (!res.ok) {
-            /// Mensaje de error
-            return []
+        if (cityId === "-1") {
+            // Si el usuario seleccionó ver todas las ciudades
+            const url = `${URL_PIECES}/todes?${queryParams.toString()}`;
+
+            const { error, data } = await get({ url });
+            if (error) {
+                /// Mensaje de error
+                return []
+            }
+
+            // En el formato de respuesta no existe un estándar, si hay resultados regresa un array caso contrario, un objeto con data vacía
+             return Array.isArray(data) ? data : data.data;
+        } else {
+            // En caso haya especificado la ciudad
+            queryParams.append("ciudadId", cityId);
+            const url = `${URL_PIECES}/filtrar?${queryParams.toString()}`;
+            const { error, data } = await get({ url });
+
+            if (error) {
+                /// Mensaje de error
+                return []
+            }
+
+            return data;
         }
-       
-        const json = await res.json();
-        return json;
     }
 
     const addPieces = async ({ a = 0, b = 0, c = 0, fecha="" }) => {
@@ -49,9 +62,9 @@ export const usePieces = () => {
                 id: user.id_ciudad
             }
         };
-        const res = await post({ url: URL_PIECES, options: { body } });
+        const { error } = await post({ url: URL_PIECES, options: { body } });
 
-        if (res.error) {
+        if (error) {
             // Mensaje de error, no se pudieron agregar las piezas
         } else {
             // Mensaje de éxito, piezas agregadas

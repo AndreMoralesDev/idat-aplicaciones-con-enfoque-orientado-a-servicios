@@ -27,7 +27,7 @@ export const useAuth = () => {
             // Mostrar alerta de error
         } else {
             // Mostrar alerta de éxito
-            setUser(data);
+            setUser(data.data);
             navigate("/");
         }
     }
@@ -44,7 +44,7 @@ export const useAuth = () => {
             // Mostrar alerta de error
         } else {
             // Mostrar alerta de éxito
-            setUser(data);
+            setUser(data.data);
             navigate("/");
         }
     }
